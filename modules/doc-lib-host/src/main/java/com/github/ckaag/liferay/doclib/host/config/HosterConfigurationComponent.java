@@ -38,7 +38,7 @@ public class HosterConfigurationComponent implements HostDirectoriesSource {
     @Reference
     private DLFileEntryService dlFileEntryService;
 
-    private final Map<Long, HosterConfiguration> configurations = new HashMap<>();
+    private volatile Map<Long, HosterConfiguration> configurations = new HashMap<>();
 
     @Activate
     @Modified
@@ -46,6 +46,7 @@ public class HosterConfigurationComponent implements HostDirectoriesSource {
         configurations.clear();
         for (Company company : companyLocalService.getCompanies()) {
             try {
+                logger.info("Loading config for company: " + company.getVirtualHostname());
                 this.configurations.put(
                         company.getCompanyId(),
                         configurationProvider
@@ -55,7 +56,7 @@ public class HosterConfigurationComponent implements HostDirectoriesSource {
                                 )
                 );
             } catch (Exception e) {
-                logger.error("Cannot Acces config for company " + (company != null ? company.getVirtualHostname() : "null"), e);
+                logger.error("Cannot ccess config for company " + (company != null ? company.getVirtualHostname() : "null"), e);
             }
         }
     }
