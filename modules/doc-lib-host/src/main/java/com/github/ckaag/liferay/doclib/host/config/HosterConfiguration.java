@@ -1,9 +1,7 @@
 package com.github.ckaag.liferay.doclib.host.config;
 
 import aQute.bnd.annotation.metatype.Meta;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-@ExtendedObjectClassDefinition(scope = ExtendedObjectClassDefinition.Scope.COMPANY)
 @Meta.OCD(id = HosterConfigurationComponent.CONFIG_ID, localization = "content/Language", name = "host-config-name")
 public interface HosterConfiguration {
 

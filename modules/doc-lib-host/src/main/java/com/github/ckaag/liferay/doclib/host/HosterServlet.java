@@ -11,9 +11,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -24,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -71,7 +70,12 @@ public class HosterServlet extends HttpServlet {
     private void processHostRequest(HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try {
             Company company = PortalUtil.getCompany(httpServletRequest);
-            User user = (User) PortalUtil.getUser(httpServletRequest);
+            User user = PortalUtil.getUser(httpServletRequest);
+            if (user == null) {
+                String currentPath = "/o/dlhost" + httpServletRequest.getPathInfo();
+                response.sendRedirect("/c/portal/login?redirect="+ URLEncoder.encode(currentPath, UTF_8));
+                return;
+            }
             PrincipalThreadLocal.setName(user.getUserId());
             PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(user);
             PermissionThreadLocal.setPermissionChecker(permissionChecker);
