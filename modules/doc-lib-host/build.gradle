@@ -3,3 +3,5 @@ dependencies {
 
     compileOnly group: "com.liferay.portal", name: "release.portal.api"
 }
+
+jar.archiveFileName = "com.github.ckaag.liferay.doclib.host.jar"

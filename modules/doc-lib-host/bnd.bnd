@@ -1,6 +1,5 @@
 Bundle-Name: Document Library HTML Host
 Bundle-SymbolicName: com.github.ckaag.liferay.doclib.host
-Bundle-Version: 1.0.0
 Export-Package:\
 com.github.ckaag.liferay.doclib.host,\
 com.github.ckaag.liferay.doclib.host.config
