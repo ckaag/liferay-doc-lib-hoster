@@ -10,3 +10,7 @@ After saving, go check out http://localhost:8080/o/dlhost/test/index.html . You 
 
 
 This does not support subfolders at the moment and is also not very fast while delivering files. It will also rely on the file entries' `VIEW` permission to deal with permission checks, so make sure they are set right. 
+
+
+## DXP / 7.2
+Go look at branches, or try master. I'm a README, not the police; I can't stop you.
