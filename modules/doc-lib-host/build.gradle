@@ -1,7 +1,9 @@
 dependencies {
     compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 
-    compileOnly group: "com.liferay.portal", name: "release.portal.api"
+    compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 }
 
 jar.archiveFileName = "com.github.ckaag.liferay.doclib.host.jar"
+
+project.version = "1.0.0.dxp72fp9"
