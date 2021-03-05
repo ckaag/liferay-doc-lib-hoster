@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -56,11 +59,18 @@ public class HosterServlet extends HttpServlet {
     }
 
     private DLFileEntry findFileToRequest(long companyId, HttpServletRequest request) throws PortalException {
-        return hostDirectoriesSource.getFileOrNull(companyId, getFolderName(request), getFileName(request));
+        List<String> path = getFilePath(request);
+        if (path.size() < 2) {
+            throw new IllegalArgumentException("illegal path: " + request.getPathInfo());
+        }
+        String filename = path.get(path.size() - 1);
+        String folderName = path.get(0);
+        List<String> subfolder = path.subList(1, path.size() - 1);
+        return hostDirectoriesSource.getFileOrNull(companyId, folderName, filename, subfolder);
     }
-
-    private String getFileName(HttpServletRequest request) {
-        return request.getPathInfo().split("/", -1)[2];
+    
+    private List<String> getFilePath(HttpServletRequest request) {
+        return Arrays.stream(request.getPathInfo().split("/", -1)).skip(1).collect(Collectors.toList());
     }
 
     private String getFolderName(HttpServletRequest request) {
